@@ -1,13 +1,14 @@
 import './pages/index.css';
-import { initialCards, createCard, like } from './scripts/cards.js'
+import { initialCards } from './scripts/cards.js'
+import { createCard, deleteCard, like } from './scripts/card.js'
 import { openModal, closeModal } from './scripts/modal.js'
 
 // Вывести карточки на страницу
 const cardsContainer = document.querySelector(".places__list");
 initialCards.forEach((card) => {
-  cardsContainer.append(createCard(card, like, showImage));
+  cardsContainer.append(createCard(card, deleteCard, like, showImage));
 });
-// Функция открытия попапа
+// Функция открытия попапа с картинкой
 const popupImage = document.querySelector(".popup_type_image");
 function showImage(card) {
   popupImage.querySelector(".popup__caption").textContent = card.name;
@@ -28,10 +29,10 @@ buttonEdit.addEventListener('click', function () {
   openModal(popupEdit);
 });
 // Отправка формы редактирования
-const formElement = document.forms["edit-profile"] ;
-const nameInput = formElement.querySelector(".popup__input_type_name");
-const jobInput = formElement.querySelector(".popup__input_type_description");
-function handleFormSubmit(evt) {
+const formEditProfile = document.forms["edit-profile"] ;
+const nameInput = formEditProfile.querySelector(".popup__input_type_name");
+const jobInput = formEditProfile.querySelector(".popup__input_type_description");
+function submitFormEditProfile(evt) {
     evt.preventDefault();
 
     const nameValue = nameInput.value;
@@ -45,7 +46,7 @@ function handleFormSubmit(evt) {
 
     closeModal(popupEdit);
 }
-formElement.addEventListener('submit', handleFormSubmit);
+formEditProfile.addEventListener('submit', submitFormEditProfile);
 // Форма добавления карточки
 const buttonAdd = document.querySelector(".profile__add-button");
 const popupAdd = document.querySelector(".popup_type_new-card");
@@ -53,19 +54,20 @@ buttonAdd.addEventListener('click', function () {
   openModal(popupAdd);
 });
 // Отправка формы добавления карточки
-const formNew = document.forms["new-place"] ;
-const placeInput = formNew.querySelector(".popup__input_type_card-name");
-const urlInput = formNew.querySelector(".popup__input_type_url");
-function addFormSubmit(evt) {
+const formNewPlace = document.forms["new-place"] ;
+const placeInput = formNewPlace.querySelector(".popup__input_type_card-name");
+const urlInput = formNewPlace.querySelector(".popup__input_type_url");
+function submitFormNewPlace(evt) {
     evt.preventDefault();
 
-    const card = [];
-    card.name = placeInput.value;
-    card.link = urlInput.value;
-    cardsContainer.prepend(createCard(card, like, showImage));
+    const card = {
+      name: placeInput.value,
+      link: urlInput.value,
+    }
+    cardsContainer.prepend(createCard(card, deleteCard, like, showImage));
     
-    formNew.reset();
+    formNewPlace.reset();
 
     closeModal(popupAdd);
 }
-formNew.addEventListener('submit', addFormSubmit);
+formNewPlace.addEventListener('submit', submitFormNewPlace);
