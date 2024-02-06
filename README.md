@@ -1,2 +1,6 @@
-# Проектная работа Mesto
-https://github.com/wordfes/mesto-project-ff.git
+## Проект «Место»
+
+[Посмотреть проект](https://wordfes.github.io/mesto/)
+
+## Краткое описание
+Одностраничный, адаптивный сайт, который создан с использованием HTML 5, CSS 3 и JavaScript. 
