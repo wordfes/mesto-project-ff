@@ -1,6 +1,6 @@
 ## Проект «Место»
 
-[Посмотреть проект](https://wordfes.github.io/mesto/)
+[Посмотреть проект](https://wordfes.github.io/mesto-project-ff/)
 
 ## Краткое описание
 Одностраничный, адаптивный сайт, который создан с использованием HTML 5, CSS 3 и JavaScript. 
