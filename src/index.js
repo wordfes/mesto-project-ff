@@ -55,6 +55,7 @@ let cardForDelete = {};
 function openEditPopup() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileJob.textContent;
+  clearValidation(formEditProfile, validationConfig);
   openModal(popupEdit);
 }
 // Функция открытия попапа с картинкой
@@ -100,47 +101,50 @@ function handleSubmit(request, evt, loadingText = "Сохранение...") {
 // Функция отправки формы редактирования профиля
 function handleProfileFormSubmit(evt) {
   function makeRequest() {
-    return api.changeProfileInfo(nameInput.value, jobInput.value).then((result) => {
-      profileTitle.textContent = result.name;
-      profileJob.textContent = result.about;
-      clearValidation(formEditProfile, validationConfig);
-      closeModal(popupEdit);
-    });
+    return api.changeProfileInfo(nameInput.value, jobInput.value)
+      .then((result) => {
+        profileTitle.textContent = result.name;
+        profileJob.textContent = result.about;
+        closeModal(popupEdit);
+      });
   }
   handleSubmit(makeRequest, evt);
 }
 // Функция отправки формы редактирования аватара
 function handleAvatarFormSubmit(evt) {
   function makeRequest() {
-    return api.setAvatar(avatarInput.value).then((result) => {
-      profileImage.style.backgroundImage = 'url(' + result.avatar + ')';
-      clearValidation(formEditAvatar, validationConfig);
-      closeModal(popupEditAvatar);
-    });
+    return api.setAvatar(avatarInput.value)
+      .then((result) => {
+        profileImage.style.backgroundImage = 'url(' + result.avatar + ')';
+        clearValidation(formEditAvatar, validationConfig);
+        closeModal(popupEditAvatar);
+      });
   }
   handleSubmit(makeRequest, evt);
 }
 // Функция отправки формы добавления карточки
 function handleCardFormSubmit(evt) {
   function makeRequest() {
-    return api.addCard(placeInput.value, urlInput.value).then((card) => {
-      cardsContainer.prepend(
-        createCard(card, removeCard, like, openImagePopup, openDeleteConfirmationPopup, profileId)
-      );
-      formNewPlace.reset();
-      clearValidation(formNewPlace, validationConfig);
-      closeModal(popupAdd);
-    });
+    return api.addCard(placeInput.value, urlInput.value)
+      .then((card) => {
+        cardsContainer.prepend(
+          createCard(card, removeCard, like, openImagePopup, openDeleteConfirmationPopup, profileId)
+        );
+        formNewPlace.reset();
+        clearValidation(formNewPlace, validationConfig);
+        closeModal(popupAdd);
+      });
   }
   handleSubmit(makeRequest, evt)
 }
 // Функция отправки формы удаления карточки
 function handleConfirmDeleteSubmit(evt) {
   function makeRequest() {
-    return api.deleteCard(cardForDelete.id).then((result) => {
-      removeCard(cardForDelete.element);
-      closeModal(popupDeleteCard);
-    });
+    return api.deleteCard(cardForDelete.id)
+      .then((result) => {
+        removeCard(cardForDelete.element);
+        closeModal(popupDeleteCard);
+      });
   }
   handleSubmit(makeRequest, evt);
 }
