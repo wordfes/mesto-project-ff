@@ -1,28 +1,26 @@
 // Функция отрытия попапа
-function openModal(modal) {
+export function openModal(modal) {
   modal.classList.add('popup_is-opened');
-  modal.addEventListener('click', сlickHandler);
-  document.addEventListener('keydown', keyHandler);
+  modal.addEventListener('click', handleCloseByClick);
+  document.addEventListener('keydown', handleCloseByEsc);
 }
 // Функция закрытия попапа
-function closeModal(modal) {
+export function closeModal(modal) {
   modal.classList.remove('popup_is-opened');
-  modal.removeEventListener('click', сlickHandler);
-  document.removeEventListener('keydown', keyHandler);
+  modal.removeEventListener('click', handleCloseByClick);
+  document.removeEventListener('keydown', handleCloseByEsc);
 }
 // Закрытие попапа по клавише Esc
-function keyHandler(evt) {
+function handleCloseByEsc(evt) {
   if (evt.key === 'Escape') {
     const modal = document.querySelector(".popup_is-opened");
     closeModal(modal);
   }
 }
 // Закрытие попапа по клику на крестик и оверлей
-function сlickHandler(evt) {
+function handleCloseByClick(evt) {
   const modal = document.querySelector(".popup_is-opened");
   if ( evt.currentTarget === evt.target || evt.target.classList.contains('popup__close') ) {
     closeModal(modal);
   }
 }
-// Экспорт функций закрытия и открытя попапа
-export { openModal, closeModal };
